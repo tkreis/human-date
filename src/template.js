@@ -5,31 +5,70 @@
 
 var Template = function (raw, subsitutes){
 
+  var original_raw = raw;
   var subsitution = /(\{\{[\s\S]+?\}\})/gi;
+  var subsition_names = /\{\{([\s\S]+?)\}\}/gi;
   var single_subsitution = /(\{\{[\s\S]+?\}\})/;
+  var subsition_name = /\{\{([\s\S]+?)\}\}/;
+  var compiled;
+  var placeholder_count = placeholder_count(raw);
 
-  this.compile = function (subsitutes){
-    check_placeholder_count(raw, subsitutes);
-    return replace_placeholders(subsitutes) 
-  }
 
-  function check_placeholder_count(raw, subsitutes){
-    if(placeholder_count(raw) != subsitutes.length){
-      throw new Error("Placeholder count doesn't fit");
+  /**
+   * Returns the meaing in the current context. In the following format:
+   * {
+   *  type: name that was in the curly brackets,
+   *  attr: value that was encountered
+   *  }
+   */
+  this.meaning = function (string){
+    var matches = string.match(compiled);
+    var i;
+    var meanings = [];
+    for(i=0; i<placeholder_count; i++){
+      meanings.push({ 
+        type: raw.match(subsition_names)[i].replace('{{','').replace('}}',''),
+        attr: matches[i+1] // to avoid the first match, which is the entire string
+      });
     }
+    return meanings;
   }
+
+  /**
+   * Compiles the templates and subsitutes the placeholder by their value.
+   */
+  this.compile = function (subsitutes){
+    compiled = replace_placeholders(subsitutes);
+    return compiled;
+  }
+
+  /**
+   * Returns true of false depending on whether a string partial 
+   * includes the template.
+   */
+  this.contained_by = function (to_check){
+
+    if(typeof(compiled) === 'undefined'){
+      throw new Error("template not compiled");
+    }
+    return new RegExp(compiled).test(to_check);
+  }
+
 
   function replace_placeholders(subsitutes){
     var i;
     var compiled = raw;
-    for(i=0; i < subsitutes.length; i++){
-      compiled = replace_placeholder(compiled, subsitutes[i]); 
+    var count = placeholder_count;
+    for(i=0; i < count; i++){
+      compiled = replace_placeholder(compiled, subsitutes); 
     }
     return compiled;
   }
 
-  function replace_placeholder(raw, subsitute){
-    return raw.replace(single_subsitution, prepare_subsitution(subsitute));
+  function replace_placeholder(raw, subsitutes){
+    return raw.replace(single_subsitution,
+                       prepare_subsitution( subsitutes[raw.match(subsition_name)[1]]
+                                          ));
   }
 
   function prepare_subsitution(subsitute){
@@ -37,7 +76,11 @@ var Template = function (raw, subsitutes){
   }
 
   function placeholder_count(raw){
-    return raw.match(subsitution).length;
+    matches = raw.match(subsitution);
+    if(matches === null){
+      return 0;
+    }
+    return matches.length;
   }
 }
 
