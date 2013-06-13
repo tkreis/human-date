@@ -1,5 +1,5 @@
 {
-  "name": "my-project-name",
+  "name": "human-date",
   "version": "0.1.0",
   "devDependencies": {
     "grunt": "~0.4.1",
@@ -7,6 +7,8 @@
     "grunt-simple-mocha": "~0.4.0",
     "grunt-contrib-watch": "~0.4.4",
     "grunt-contrib-uglify": "~0.2.2",
-    "expect.js": "~0.2.0"
+    "expect.js": "~0.2.0",
+    "fileset": "~0.1.5",
+    "minimatch": "~0.2.12"
   }
 }

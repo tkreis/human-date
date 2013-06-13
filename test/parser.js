@@ -9,13 +9,13 @@ describe('Parser', function(){
 
   describe('#parse', function(){
     it('should parse "next week" correctly', function(){
-      compareDate(parser.parse('next 2 week'),
-                  addDaysToDate(offset, 7));
+      compareDate(parser.parse('next week'),
+      addDaysToDate(offset, 7));
 
     });
     it('should parse "in 2 weeks" correctly', function(){
       compareDate(parser.parse('in 2 week'),
-                  addDaysToDate(offset, 14));
+      addDaysToDate(offset, 14));
 
     });
   });
@@ -26,9 +26,6 @@ function addDaysToDate(date, days){
 }
 
 function compareDate(date, date2){
-
-  console.log(date);
-  console.log(date2);
   assert.equal(getTimestamp(date), getTimestamp(date2));
 }
 
