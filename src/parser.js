@@ -3,11 +3,14 @@ var Template = require('./template');
 var Operation = require('./operation');
 
 var language = {
-  units: ['week'],
-  range: ['next','in'],
+  units: ['week', 'hours', 'weeks'],
+  modifiers: ['next','in', 'before'],
+  day_movements: ['tomorrow', 'yesterday'],
   numbers_text: ['one','two', 'three','four', 'five','six', 'seven','eight', 'nine','ten'],
-  numbers: [1,2,3,4,5,6,7,8,9,10 ],
-  templates: ['next {{numbers}}* {{units}}', 'in {{numbers}} {{units}}', 'next {{units}}']
+  numbers: { attr: [1,2,3,4,5,6,7,8,9,10], various: true },
+  templates: ['{{modifiers}} {{numbers}} {{units}}',
+              'next {{units}}', '{{day_movements}}',
+              '{{numbers}} {{units}} {{modifiers}}']
 };
 
 
@@ -47,7 +50,5 @@ var HumanizeDate = function (offset){
   }
 
 }
-
-
 
 module.exports = HumanizeDate;

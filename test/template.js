@@ -10,8 +10,16 @@ describe('Template', function(){
 
   describe('#compile', function(){
     it('should parse compile template correctly', function(){
-      assert(template.compile(subsitutes),
-             "next (1|2 (week|month)");
+      assert.equal(template.compile(subsitutes),
+             "next (1|2) (week|month)");
+    });
+
+    it('should parse compile template correctly', function(){
+      var subsitutes_with_object= {numbers: {attr: [1,2], various: true },
+                                   units: ['week','month']};
+
+      assert.equal(template.compile(subsitutes_with_object),
+             "next ([1|2]*) (week|month)");
     });
   });
 

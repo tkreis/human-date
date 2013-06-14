@@ -11,4 +11,13 @@ Allow users to type in phrases like:
 ``` 
 and translate them into dates or date-ranges (ical- format). 
 
+###Current state
+
+- dumb templates. That create the used regular expressions
+- getting dates by the follwing format:
+
+```
+"next week", "in 2 weeks", "in two hours", "yesterday", "tomorrow", "12 hours before"
+
+
 

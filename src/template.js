@@ -30,6 +30,7 @@ var Template = function (raw, subsitutes){
         type: raw.match(subsition_names)[i].replace('{{','').replace('}}',''),
         attr: matches[i+1] // to avoid the first match, which is the entire string
       });
+      
     }
     return meanings;
   }
@@ -47,7 +48,6 @@ var Template = function (raw, subsitutes){
    * includes the template.
    */
   this.contained_by = function (to_check){
-
     if(typeof(compiled) === 'undefined'){
       throw new Error("template not compiled");
     }
@@ -72,6 +72,12 @@ var Template = function (raw, subsitutes){
   }
 
   function prepare_subsitution(subsitute){
+    if(typeof(subsitute.attr) !== 'undefined'){
+      if(subsitute.various){
+        return ('(['+subsitute.attr.join('|')+']*)');
+      }
+      return ('('+subsitute.attr.join('|')+')');
+    }
     return ('('+subsitute.join('|')+')');
   }
 
@@ -85,3 +91,4 @@ var Template = function (raw, subsitutes){
 }
 
 module.exports = Template;
+
