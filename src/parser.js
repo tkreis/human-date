@@ -4,13 +4,14 @@ var Operation = require('./operation');
 
 var language = {
   units: ['week', 'hours', 'weeks'],
-  modifiers: ['next','in', 'before'],
+  modifiers: ['next','in', 'before', 'from'],
   day_movements: ['tomorrow', 'yesterday'],
   numbers_text: ['one','two', 'three','four', 'five','six', 'seven','eight', 'nine','ten'],
   numbers: { attr: [1,2,3,4,5,6,7,8,9,10], various: true },
   templates: ['{{modifiers}} {{numbers}} {{units}}',
               'next {{units}}', '{{day_movements}}',
-              '{{numbers}} {{units}} {{modifiers}}']
+              '{{numbers}} {{units}} {{modifiers}} {{day_movements}}?',
+              ]
 };
 
 

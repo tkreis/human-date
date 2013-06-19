@@ -43,6 +43,25 @@ describe('Parser', function(){
       removeHoursFromDate(offset, 12 ));
     });
 
+    it('should parse "12 hours before yesterday" correctly', function(){
+      compareDate(parser.parse('12 hours before yesterday'),
+      removeDaysFromDate(removeHoursFromDate(offset, 12 ),1));
+    });
+
+    it('should parse "12 hours before tomorrow" correctly', function(){
+      compareDate(parser.parse('12 hours before tomorrow'),
+      addDaysToDate(removeHoursFromDate(offset, 12 ),1));
+    });
+
+    it('should parse "12 hours from yesterday" correctly', function(){
+      compareDate(parser.parse('12 hours from yesterday'),
+      removeDaysFromDate(addHoursToDate(offset, 12 ),1));
+    });
+
+    it('should parse "12 hours from tomorrow" correctly', function(){
+      compareDate(parser.parse('12 hours from tomorrow'),
+      addDaysToDate(addHoursToDate(offset, 12 ),1));
+    });
   });
 });
 
@@ -64,7 +83,7 @@ function removeDaysFromDate(date, days){
 
 function compareDate(date, date2){
 if(getTimestamp(date) !== getTimestamp(date2)){
-  console.log('---------');
+  console.log('----------------[ERROR - Date missmatch]------------------');
   console.log(date);
   console.log(date2);
 }

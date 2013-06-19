@@ -9,6 +9,7 @@ var operations = {
   next: function (stack){ return new NextOperation(stack)},
   'in': function (stack){ return new InOperation(stack)},
   before: function (stack){ return new BeforeOperation(stack)},
+  from: function (stack){ return new FromOperation(stack)},
   tomorrow: function (stack) { return new TomorrowOperation(stack)},
   yesterday: function (stack) { return new YesterdayOperation(stack)}
 
@@ -50,10 +51,13 @@ function HourOperation (stack){
 
   this.calculate_new_offset = function (offset, value){
     var next_element = stack.pop();
+    var result;
     if(typeof(next_element) !== 'undefined'){
-    stack.push(next_element);
-    return new Date(offset.getTime() + (get_class(next_element)(stack).calculate_new_offset(offset, next_element) * HOUR));
+      result = new Date(offset.getTime() + (get_class(next_element)(stack).calculate_new_offset(offset, next_element) * HOUR));
+      stack.push(next_element);
+      return result;
     }
+
     return new Date(offset.getTime() + HOUR);
   }
 };
@@ -81,12 +85,29 @@ function NextOperation (stack){
 };
 
 
-function BeforeOperation (stack){
-  this.IDENTIFIER = 'before';
-
+function FromOperation (stack){
   this.calculate_new_offset = function (offset, value){
     var next_element = stack.pop();
     if(typeof(next_element) !== 'undefined' && different_type(next_element, this)){
+
+      return calculate_new_positive_date(
+        new get_class(next_element)(stack).calculate_new_offset(offset, next_element),
+      offset);
+    }
+    stack.push(next_element);
+    return +1;
+  }
+
+  function calculate_new_positive_date(future_time, offset){
+    return new Date(offset - ( future_time.getTime() - offset.getTime()));
+  }
+}
+
+function BeforeOperation (stack){
+  this.calculate_new_offset = function (offset, value){
+    var next_element = stack.pop();
+    if(typeof(next_element) !== 'undefined' && different_type(next_element, this)){
+
       return calculate_new_negative_date(
         new get_class(next_element)(stack).calculate_new_offset(offset, next_element),
       offset);

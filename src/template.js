@@ -62,7 +62,7 @@ var Template = function (raw, subsitutes){
     for(i=0; i < count; i++){
       compiled = replace_placeholder(compiled, subsitutes); 
     }
-    return compiled;
+    return compiled.replace(/\s/g, '\\s?');
   }
 
   function replace_placeholder(raw, subsitutes){

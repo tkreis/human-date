@@ -17,7 +17,11 @@ and translate them into dates or date-ranges (ical- format).
 - getting dates by the follwing format:
 
 ```
-"next week", "in 2 weeks", "in two hours", "yesterday", "tomorrow", "12 hours before"
+"next week", "in 2 weeks", "in two hours", "yesterday", "tomorrow", "12 hours before, 12 hours before yesterday/tomorrow, 12 hours from yesterday/tomorrow"
+```
+
+###Build project 
+With grunt
 
 
 

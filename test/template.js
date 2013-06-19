@@ -11,7 +11,7 @@ describe('Template', function(){
   describe('#compile', function(){
     it('should parse compile template correctly', function(){
       assert.equal(template.compile(subsitutes),
-             "next (1|2) (week|month)");
+             "next\\s?(1|2)\\s?(week|month)");
     });
 
     it('should parse compile template correctly', function(){
@@ -19,7 +19,7 @@ describe('Template', function(){
                                    units: ['week','month']};
 
       assert.equal(template.compile(subsitutes_with_object),
-             "next ([1|2]*) (week|month)");
+             "next\\s?([1|2]*)\\s?(week|month)");
     });
   });
 
