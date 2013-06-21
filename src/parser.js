@@ -6,11 +6,19 @@ var language = {
   units: ['week', 'hours', 'weeks'],
   modifiers: ['next','in', 'before', 'from'],
   day_movements: ['tomorrow', 'yesterday'],
+
+  day: {attr: [1,2,3,4,5,6,7,8,9,10], various: true},
+  month: {attr: [1,2,3,4,5,6,7,8,9,10], various: true},
+  year: {attr: [1,2,3,4,5,6,7,8,9,10], various: true},
+  
+  month_text: ['January', 'February','March','April', 'May', 'Juni', 'July', 'August', 'September', 'October', 'November', 'Dezember'],
   numbers_text: ['one','two', 'three','four', 'five','six', 'seven','eight', 'nine','ten'],
   numbers: { attr: [1,2,3,4,5,6,7,8,9,10], various: true },
   templates: ['{{modifiers}} {{numbers}} {{units}}',
               'next {{units}}', '{{day_movements}}',
               '{{numbers}} {{units}} {{modifiers}} {{day_movements}}?',
+              '{{day}}\\.{{month}}\\.{{year}}',
+              '{{day}} {{month_text}} {{year}}'
               ]
 };
 

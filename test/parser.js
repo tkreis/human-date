@@ -62,6 +62,21 @@ describe('Parser', function(){
       compareDate(parser.parse('12 hours from tomorrow'),
       addDaysToDate(addHoursToDate(offset, 12 ),1));
     });
+
+    it('should parse "28.8.1991" correctly', function(){
+      compareDate(parser.parse('28.8.1991'),
+                  new Date('8.28.1991'));
+    });
+
+    it('should parse "09.9.1988" correctly', function(){
+      compareDate(parser.parse('09.9.1988'),
+                  new Date('09.9.1988'));
+    });
+
+    it('should parse "09 September 1988" correctly', function(){
+      compareDate(parser.parse('09 September 1988'),
+                  new Date('09.9.1988'));
+    });
   });
 });
 
